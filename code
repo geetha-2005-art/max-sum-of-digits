@@ -1,0 +1,22 @@
+from collections import defaultdict
+from typing import List
+
+class Solution:
+    def maximumSum(self, nums: List[int]) -> int:
+        def sum_of_digits(n):
+            return sum(int(digit) for digit in str(n))
+        
+        digit_sum_map = defaultdict(list)
+        
+        for num in nums:
+            digit_sum = sum_of_digits(num)
+            digit_sum_map[digit_sum].append(num)
+        
+        max_sum = -1
+        
+        for values in digit_sum_map.values():
+            if len(values) > 1:
+                values.sort(reverse=True)  # Sort in descending order
+                max_sum = max(max_sum, values[0] + values[1])  # Take the top two
+        
+        return max_sum
